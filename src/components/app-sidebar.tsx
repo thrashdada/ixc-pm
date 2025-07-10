@@ -15,6 +15,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import {
   DropdownMenu,
@@ -386,6 +387,7 @@ export function AppSidebar() {
   const initialRole = roles.find(r => r.key === urlRole) || roles[0];
   const [currentRole, setCurrentRole] = useState(initialRole);
   const [expandedSection, setExpandedSection] = useState<string | null>("dashboard");
+  const { state: sidebarState } = useSidebar();
 
   function handleRoleSwitch(role: typeof roles[number]) {
     setCurrentRole(role);
@@ -481,13 +483,15 @@ export function AppSidebar() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   {section.subItems.length > 0 && expandedSection === section.key && (
-                    <div className="ml-8">
+                    <div
+                      className="ml-8 transition-all group-data-[collapsible=icon]:ml-0 group-data-[collapsible=icon]:bg-sidebar-accent group-data-[collapsible=icon]:text-sidebar-accent-foreground group-data-[collapsible=icon]:rounded-md"
+                    >
                       {section.subItems.map((sub) => (
                         <SidebarMenuItem key={`${section.key}-${sub.title}`}>
                           <SidebarMenuButton asChild tooltip={sub.title}>
                             <Link href={sub.url} className="flex items-center">
                               {sub.icon && <sub.icon className="h-4 w-4 mr-2" />}
-                              <span>{sub.title}</span>
+                              <span className={sidebarState === "collapsed" ? "inline" : ""}>{sub.title}</span>
                             </Link>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
