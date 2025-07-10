@@ -1,5 +1,6 @@
 'use client';
 
+import React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
@@ -454,8 +455,8 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {sidebarSectionsToUse.map((section) => (
-                <>
-                  <SidebarMenuItem key={section.key}>
+                <React.Fragment key={section.key}>
+                  <SidebarMenuItem>
                     <SidebarMenuButton
                       asChild
                       tooltip={section.title}
@@ -482,7 +483,7 @@ export function AppSidebar() {
                   {section.subItems.length > 0 && expandedSection === section.key && (
                     <div className="ml-8">
                       {section.subItems.map((sub) => (
-                        <SidebarMenuItem key={sub.title}>
+                        <SidebarMenuItem key={`${section.key}-${sub.title}`}>
                           <SidebarMenuButton asChild tooltip={sub.title}>
                             <Link href={sub.url} className="flex items-center">
                               {sub.icon && <sub.icon className="h-4 w-4 mr-2" />}
@@ -493,7 +494,7 @@ export function AppSidebar() {
                       ))}
                     </div>
                   )}
-                </>
+                </React.Fragment>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>

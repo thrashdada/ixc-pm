@@ -73,13 +73,14 @@ export default function DashboardPageClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlRole]);
 
-  // Mock notifications
+  // Mock notifications - general content applicable to all roles
   const notifications = [
-    { id: 1, text: "New job accepted by contractor", unread: true },
-    { id: 2, text: "Photo uploaded for WO-1023", unread: true },
-    { id: 3, text: "Job WO-1022 completed", unread: false },
-    { id: 4, text: "Tenant note added to WO-1021", unread: false },
-    { id: 5, text: "Contractor has a question", unread: true },
+    { id: 1, text: "System maintenance scheduled for tonight at 2 AM", unread: true },
+    { id: 2, text: "New security update available", unread: true },
+    { id: 3, text: "Weekly report is ready for download", unread: false },
+    { id: 4, text: "Your profile has been updated successfully", unread: false },
+    { id: 5, text: "Backup completed successfully", unread: false },
+    { id: 6, text: "New feature available: Enhanced photo upload", unread: true },
   ];
   const unreadCount = notifications.filter(n => n.unread).length;
 
@@ -119,10 +120,6 @@ export default function DashboardPageClient() {
             </DropdownMenuContent>
           </DropdownMenu>
           <ThemeToggle />
-          <Button className="gap-2" variant="default" size="sm">
-            <PlusCircle className="h-4 w-4" />
-            Quick Create
-          </Button>
         </div>
       </header>
       <div className="flex-1 space-y-4 p-8 pt-6 bg-muted/50">
