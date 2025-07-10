@@ -1,5 +1,9 @@
+'use client';
+
 import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import {
   Sidebar,
   SidebarContent,
@@ -39,8 +43,9 @@ import {
   CreditCard,
   Bell,
   LogOut,
+  Check,
 } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 // Main navigation items
 const navigationItems = [
@@ -95,7 +100,33 @@ const documentsItems = [
   },
 ]
 
+const roles = [
+  { key: "pm", name: "Property Manager", sub: "Manage properties", shortcut: "⌘1" },
+  { key: "contractor", name: "Contractor", sub: "Receive jobs", shortcut: "⌘2" },
+  { key: "admin", name: "Platform Admin", sub: "System admin", shortcut: "⌘3" },
+  { key: "accountant", name: "Accountant", sub: "Billing & payments", shortcut: "⌘4" },
+];
+
 export function AppSidebar() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlRole = searchParams.get("role");
+  const initialRole = roles.find(r => r.key === urlRole) || roles[0];
+  const [currentRole, setCurrentRole] = useState(initialRole);
+
+  function handleRoleSwitch(role: typeof roles[number]) {
+    setCurrentRole(role);
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    params.set("role", role.key);
+    router.replace(`/dashboard?${params.toString()}`);
+  }
+
+  function handleLogout() {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("demo-auth");
+      router.replace("/login");
+    }
+  }
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -110,6 +141,38 @@ export function AppSidebar() {
             incoXchange
           </span>
         </div>
+        {/* Account Type Switcher Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex w-full items-center gap-2 rounded-md px-2 py-2 mt-2 transition-colors hover:bg-background focus:outline-none group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-0 group-data-[collapsible=icon]:mt-0">
+              <Avatar className="h-8 w-8 rounded-lg group-data-[collapsible=icon]:mx-auto" >
+                <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">{currentRole.name.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col flex-1 min-w-0 text-left group-data-[collapsible=icon]:hidden">
+                <span className="truncate font-semibold text-base leading-tight">{currentRole.name}</span>
+                <span className="truncate text-xs text-muted-foreground leading-tight">{currentRole.sub}</span>
+              </div>
+              <ChevronsUpDown className="ml-auto size-4 text-muted-foreground group-data-[collapsible=icon]:hidden" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="min-w-56 rounded-lg" side="bottom" align="start" sideOffset={4}>
+            <DropdownMenuLabel>Account Type</DropdownMenuLabel>
+            {roles.map((role) => (
+              <DropdownMenuItem
+                key={role.key}
+                onClick={() => handleRoleSwitch(role)}
+                className="flex items-center gap-2"
+              >
+                <Avatar className="h-6 w-6 rounded-md">
+                  <AvatarFallback className="rounded-md bg-primary text-primary-foreground">{role.name.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
+                </Avatar>
+                <span className="flex-1 truncate">{role.name}</span>
+                {currentRole.key === role.key && <Check className="ml-2 h-4 w-4 text-primary" />}
+                <span className="ml-auto text-xs text-muted-foreground">{role.shortcut}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </SidebarHeader>
       
       <SidebarContent className="overflow-hidden">
@@ -161,12 +224,12 @@ export function AppSidebar() {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src="/incoxchange-logomark.svg" alt="shadcn" />
-                    <AvatarFallback className="rounded-lg">SC</AvatarFallback>
+                    {/* Use initials for demo user */}
+                    <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">DE</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">shadcn</span>
-                    <span className="truncate text-xs">m@example.com</span>
+                    <span className="truncate font-semibold">Demo User</span>
+                    <span className="truncate text-xs">demo@incoxchange.com</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -180,12 +243,11 @@ export function AppSidebar() {
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src="/incoxchange-logomark.svg" alt="shadcn" />
-                      <AvatarFallback className="rounded-lg">SC</AvatarFallback>
+                      <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">DE</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">shadcn</span>
-                      <span className="truncate text-xs">m@example.com</span>
+                      <span className="truncate font-semibold">Demo User</span>
+                      <span className="truncate text-xs">demo@incoxchange.com</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -216,7 +278,7 @@ export function AppSidebar() {
                   Search
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
                   <LogOut />
                   Log out
                 </DropdownMenuItem>
