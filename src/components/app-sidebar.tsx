@@ -26,56 +26,90 @@ import {
 import { 
   LayoutDashboard,
   Building2,
-  ClipboardList,
-  HardHat,
-  MessageSquare,
-  BarChart2,
-  Settings2,
-  ChevronDown,
-  ChevronRight,
   List,
-  KeyRound,
   CalendarCheck2,
   ListChecks,
   PlusCircle,
-  FileStack,
-  CheckCircle2,
-  Users2,
-  UserPlus2,
-  StarHalf,
-  MessageCircle,
-  Mail,
+  Users,
+  ClipboardList,
+  Bell,
+  Database,
+  BarChart2,
+  Settings2,
+  LifeBuoy,
   FileText,
+  CreditCard,
+  ShieldCheck,
+  ShieldOff,
+  LockKeyhole,
+  Activity,
+  ChevronDown,
+  ChevronRight,
+  UserCheck,
+  UserCog,
+  Flag,
+  Search,
+  AlertTriangle,
+  MessageCircle,
+  FileStack,
+  UploadCloud,
+  XCircle,
+  StarHalf,
+  KeyRound,
+  Lock,
+  Bug,
   FileBarChart2,
   PieChart,
   TrendingUp,
   Download,
+  Wrench,
+  Key,
+  Zap,
+  PauseCircle,
+  Mail,
+  BookOpen,
+  FileInput,
+  Image as ImageIcon,
+  HelpCircle,
+  PhoneCall,
+  Eye,
+  Trash2,
+  Banknote,
+  CheckCircle2,
+  HardHat,
+  Users2,
+  UserPlus2,
+  MessageSquare,
   Building,
-  UserCog,
-  CreditCard,
   ImageDown,
+  BadgeCheck,
+  Camera,
+  Mic,
+  User,
   ChevronsUpDown,
   Check,
-  User,
-  Bell,
-  LifeBuoy,
-  Search,
   LogOut,
-  Camera,
-  UploadCloud,
-  XCircle,
-  FileInput,
-  BadgeCheck,
-  History,
-  Image as ImageIcon,
-  Mic,
-  PhoneCall,
-  HelpCircle,
-  Banknote,
+  LucideIcon,
 } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
-const sidebarSections = [
+// Add type for sidebar section and subItem
+
+type SidebarSubItem = {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+};
+
+type SidebarSection = {
+  key: string;
+  title: string;
+  icon: LucideIcon;
+  url?: string;
+  subItems: SidebarSubItem[];
+};
+
+const sidebarSections: SidebarSection[] = [
   {
     key: "dashboard",
     title: "Dashboard",
@@ -148,7 +182,126 @@ const sidebarSections = [
   },
 ];
 
-const contractorSidebarSections = [
+const adminSidebarSections: SidebarSection[] = [
+  {
+    key: "dashboard",
+    title: "Dashboard",
+    icon: LayoutDashboard,
+    url: "/dashboard",
+    subItems: [],
+  },
+  {
+    key: "user-management",
+    title: "User Management",
+    icon: Users,
+    subItems: [
+      { title: "Property Managers", url: "/admin/users/pms", icon: UserCheck },
+      { title: "Business Verification Queue", url: "/admin/users/verification", icon: KeyRound },
+      { title: "Contractors", url: "/admin/users/contractors", icon: UserCog },
+      { title: "Flagged Users", url: "/admin/users/flagged", icon: Flag },
+      { title: "Team Roles & Access Logs", url: "/admin/users/roles", icon: Lock },
+    ],
+  },
+  {
+    key: "work-orders-monitor",
+    title: "Work Orders Monitor",
+    icon: ClipboardList,
+    subItems: [
+      { title: "All Work Orders", url: "/admin/work-orders", icon: FileText },
+      { title: "Pending / Flagged Jobs", url: "/admin/work-orders/pending", icon: Flag },
+      { title: "High Priority Issues", url: "/admin/work-orders/high-priority", icon: AlertTriangle },
+      { title: "Search & Filters", url: "/admin/work-orders/search", icon: Search },
+    ],
+  },
+  {
+    key: "sms-notifications",
+    title: "SMS & Notifications",
+    icon: Bell,
+    subItems: [
+      { title: "SMS Logs", url: "/admin/sms/logs", icon: MessageCircle },
+      { title: "Delivery Status", url: "/admin/sms/delivery", icon: Mail },
+      { title: "Retry Queue", url: "/admin/sms/retry", icon: PauseCircle },
+      { title: "Templates & Triggers", url: "/admin/sms/templates", icon: FileStack },
+    ],
+  },
+  {
+    key: "storage",
+    title: "Photo & File Storage",
+    icon: Database,
+    subItems: [
+      { title: "Photo Upload Logs", url: "/admin/storage/photos", icon: UploadCloud },
+      { title: "Failed Uploads", url: "/admin/storage/failed", icon: XCircle },
+      { title: "Storage Quota Dashboard", url: "/admin/storage/quota", icon: BarChart2 },
+      { title: "Content Review Panel", url: "/admin/storage/review", icon: Eye },
+    ],
+  },
+  {
+    key: "analytics",
+    title: "Analytics & Reports",
+    icon: BarChart2,
+    subItems: [
+      { title: "PM & Contractor Metrics", url: "/admin/analytics/metrics", icon: PieChart },
+      { title: "Work Order Trends", url: "/admin/analytics/trends", icon: TrendingUp },
+      { title: "Feature Usage", url: "/admin/analytics/features", icon: Zap },
+      { title: "Export Reports", url: "/admin/analytics/export", icon: Download },
+    ],
+  },
+  {
+    key: "settings",
+    title: "System Settings",
+    icon: Settings2,
+    subItems: [
+      { title: "Feature Flags", url: "/admin/settings/flags", icon: Wrench },
+      { title: "API Keys & Integrations", url: "/admin/settings/api", icon: Key },
+      { title: "Rate Limits & Access Controls", url: "/admin/settings/rate-limits", icon: LockKeyhole },
+      { title: "Maintenance Mode", url: "/admin/settings/maintenance", icon: PauseCircle },
+    ],
+  },
+  {
+    key: "support",
+    title: "Support & Feedback",
+    icon: LifeBuoy,
+    subItems: [
+      { title: "Open Support Tickets", url: "/admin/support/tickets", icon: HelpCircle },
+      { title: "Bug Reports", url: "/admin/support/bugs", icon: Bug },
+      { title: "User Feedback", url: "/admin/support/feedback", icon: BookOpen },
+      { title: "Internal Notes", url: "/admin/support/notes", icon: FileText },
+    ],
+  },
+  {
+    key: "billing",
+    title: "Billing & Invoicing (Future)",
+    icon: CreditCard,
+    subItems: [
+      { title: "Subscription Plans", url: "/admin/billing/plans", icon: FileText },
+      { title: "Company Billing Records", url: "/admin/billing/records", icon: FileBarChart2 },
+      { title: "Invoice Logs", url: "/admin/billing/invoices", icon: FileInput },
+    ],
+  },
+  {
+    key: "security",
+    title: "Security & Compliance",
+    icon: ShieldCheck,
+    subItems: [
+      { title: "Audit Logs", url: "/admin/security/audit", icon: FileText },
+      { title: "Data Deletion Requests", url: "/admin/security/deletion", icon: Trash2 },
+      { title: "Access Violation Alerts", url: "/admin/security/violations", icon: ShieldOff },
+      { title: "Encryption & Privacy Policies", url: "/admin/security/policies", icon: Lock },
+    ],
+  },
+  {
+    key: "activity-logs",
+    title: "Activity Logs",
+    icon: Activity,
+    subItems: [
+      { title: "Admin Actions", url: "/admin/activity/admin", icon: UserCog },
+      { title: "User Behavior Tracking", url: "/admin/activity/users", icon: Eye },
+      { title: "System Warnings/Crashes", url: "/admin/activity/warnings", icon: AlertTriangle },
+    ],
+  },
+];
+
+const contractorSidebarSections: SidebarSection[] = [
   {
     key: "dashboard",
     title: "Dashboard",
@@ -200,7 +353,7 @@ const contractorSidebarSections = [
   {
     key: "history",
     title: "History",
-    icon: History,
+    icon: FileText,
     subItems: [
       { title: "Work History", url: "/contractor/history", icon: FileText },
       { title: "Ratings & Feedback", url: "/contractor/history/ratings", icon: StarHalf },
@@ -247,7 +400,7 @@ export function AppSidebar() {
     }
   }
   // Choose sidebar sections based on role
-  const sidebarSectionsToUse = currentRole.key === 'contractor' ? contractorSidebarSections : sidebarSections;
+  const sidebarSectionsToUse = currentRole.key === 'contractor' ? contractorSidebarSections : currentRole.key === 'admin' ? adminSidebarSections : sidebarSections;
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
