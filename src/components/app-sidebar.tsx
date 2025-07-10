@@ -10,12 +10,10 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from "@/components/ui/sidebar"
 import {
   DropdownMenu,
@@ -26,79 +24,199 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { 
-  BarChart3, 
-  Home, 
-  Settings, 
-  Users,
+  LayoutDashboard,
+  Building2,
+  ClipboardList,
+  HardHat,
+  MessageSquare,
+  BarChart2,
+  Settings2,
+  ChevronDown,
+  ChevronRight,
+  List,
+  KeyRound,
+  CalendarCheck2,
+  ListChecks,
+  PlusCircle,
+  FileStack,
+  CheckCircle2,
+  Users2,
+  UserPlus2,
+  StarHalf,
+  MessageCircle,
+  Mail,
   FileText,
-  Activity,
+  FileBarChart2,
+  PieChart,
+  TrendingUp,
+  Download,
+  Building,
+  UserCog,
+  CreditCard,
+  ImageDown,
+  ChevronsUpDown,
+  Check,
+  User,
+  Bell,
   LifeBuoy,
   Search,
-  Folder,
-  MoreHorizontal,
-  BookOpen,
-  UserCircle,
-  ChevronsUpDown,
-  User,
-  CreditCard,
-  Bell,
   LogOut,
-  Check,
+  Camera,
+  UploadCloud,
+  XCircle,
+  FileInput,
+  BadgeCheck,
+  History,
+  Image as ImageIcon,
+  Mic,
+  PhoneCall,
+  HelpCircle,
+  Banknote,
 } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
-// Main navigation items
-const navigationItems = [
+const sidebarSections = [
   {
+    key: "dashboard",
     title: "Dashboard",
-    url: "/",
-    icon: Home,
+    icon: LayoutDashboard,
+    url: "/dashboard",
+    subItems: [],
   },
   {
-    title: "Lifecycle",
-    url: "/lifecycle",
-    icon: Activity,
+    key: "properties",
+    title: "Properties",
+    icon: Building2,
+    subItems: [
+      { title: "All Properties", url: "/properties", icon: List },
+      { title: "Units & Access Info", url: "/properties/units", icon: KeyRound },
+      { title: "Maintenance Schedules", url: "/properties/maintenance", icon: CalendarCheck2 },
+    ],
   },
   {
-    title: "Analytics",
-    url: "/analytics",
-    icon: BarChart3,
+    key: "workorders",
+    title: "Work Orders",
+    icon: ClipboardList,
+    subItems: [
+      { title: "All Work Orders", url: "/work-orders", icon: ListChecks },
+      { title: "Create Work Order", url: "/work-orders/create", icon: PlusCircle },
+      { title: "Templates", url: "/work-orders/templates", icon: FileStack },
+      { title: "Approvals Needed", url: "/work-orders/approvals", icon: CheckCircle2 },
+    ],
   },
   {
-    title: "Projects",
-    url: "/projects",
-    icon: Folder,
+    key: "contractors",
+    title: "Contractors",
+    icon: HardHat,
+    subItems: [
+      { title: "My Contractors", url: "/contractors", icon: Users2 },
+      { title: "Invite Contractors", url: "/contractors/invite", icon: UserPlus2 },
+      { title: "Ratings & Performance", url: "/contractors/ratings", icon: StarHalf },
+    ],
   },
   {
-    title: "Team",
-    url: "/team",
-    icon: Users,
-  },
-]
-
-// Documents section items
-const documentsItems = [
-  {
-    title: "Data Library",
-    url: "/data-library",
-    icon: BookOpen,
+    key: "messages",
+    title: "Messages",
+    icon: MessageSquare,
+    subItems: [
+      { title: "Work Order Threads", url: "/messages/threads", icon: MessageCircle },
+      { title: "All Messages", url: "/messages", icon: Mail },
+      { title: "Templates & Quick Replies", url: "/messages/templates", icon: FileText },
+    ],
   },
   {
+    key: "reports",
     title: "Reports",
-    url: "/reports",
-    icon: FileText,
+    icon: BarChart2,
+    subItems: [
+      { title: "Job Reports", url: "/reports/jobs", icon: FileBarChart2 },
+      { title: "Contractor Analytics", url: "/reports/contractors", icon: PieChart },
+      { title: "Maintenance Trends", url: "/reports/maintenance", icon: TrendingUp },
+      { title: "Export Data", url: "/reports/export", icon: Download },
+    ],
   },
   {
-    title: "Word Assistant",
-    url: "/word-assistant",
-    icon: UserCircle,
+    key: "settings",
+    title: "Settings",
+    icon: Settings2,
+    subItems: [
+      { title: "Company Profile", url: "/settings/company", icon: Building },
+      { title: "Team Members & Roles", url: "/settings/team", icon: UserCog },
+      { title: "SMS Usage & Billing", url: "/settings/billing", icon: CreditCard },
+      { title: "Photo/Storage Settings", url: "/settings/storage", icon: ImageDown },
+    ],
+  },
+];
+
+const contractorSidebarSections = [
+  {
+    key: "dashboard",
+    title: "Dashboard",
+    icon: LayoutDashboard,
+    url: "/dashboard",
+    subItems: [],
   },
   {
-    title: "More",
-    url: "/more",
-    icon: MoreHorizontal,
+    key: "myjobs",
+    title: "My Jobs",
+    icon: ClipboardList,
+    subItems: [
+      { title: "Active Jobs", url: "/contractor/jobs/active", icon: ListChecks },
+      { title: "Pending Acceptance", url: "/contractor/jobs/pending", icon: CheckCircle2 },
+      { title: "Completed Jobs", url: "/contractor/jobs/completed", icon: BadgeCheck },
+      { title: "Declined / Canceled", url: "/contractor/jobs/declined", icon: XCircle },
+    ],
   },
-]
+  {
+    key: "upload",
+    title: "Upload Center",
+    icon: Camera,
+    subItems: [
+      { title: "Upload Photos", url: "/contractor/upload/photos", icon: UploadCloud },
+      { title: "Submit Invoice", url: "/contractor/upload/invoice", icon: FileInput },
+      { title: "Mark as Completed", url: "/contractor/upload/complete", icon: CheckCircle2 },
+    ],
+  },
+  {
+    key: "messages",
+    title: "Messages",
+    icon: MessageSquare,
+    subItems: [
+      { title: "Job Messages", url: "/contractor/messages/jobs", icon: Mail },
+      { title: "Voice Notes", url: "/contractor/messages/voice", icon: Mic },
+      { title: "Quick Replies", url: "/contractor/messages/quick-replies", icon: FileStack },
+    ],
+  },
+  {
+    key: "profile",
+    title: "Profile & Settings",
+    icon: UserCog,
+    subItems: [
+      { title: "My Profile", url: "/contractor/profile", icon: User },
+      { title: "Certifications & Insurance", url: "/contractor/profile/certifications", icon: BadgeCheck },
+      { title: "Bank Details", url: "/contractor/profile/bank", icon: Banknote },
+    ],
+  },
+  {
+    key: "history",
+    title: "History",
+    icon: History,
+    subItems: [
+      { title: "Work History", url: "/contractor/history", icon: FileText },
+      { title: "Ratings & Feedback", url: "/contractor/history/ratings", icon: StarHalf },
+      { title: "Before/After Portfolio", url: "/contractor/history/portfolio", icon: ImageIcon },
+    ],
+  },
+  {
+    key: "support",
+    title: "Support",
+    icon: LifeBuoy,
+    subItems: [
+      { title: "FAQ / Help Center", url: "/contractor/support/faq", icon: HelpCircle },
+      { title: "Contact Support", url: "/contractor/support/contact", icon: PhoneCall },
+    ],
+  },
+];
 
 const roles = [
   { key: "pm", name: "Property Manager", sub: "Manage properties", shortcut: "⌘1" },
@@ -113,6 +231,7 @@ export function AppSidebar() {
   const urlRole = searchParams.get("role");
   const initialRole = roles.find(r => r.key === urlRole) || roles[0];
   const [currentRole, setCurrentRole] = useState(initialRole);
+  const [expandedSection, setExpandedSection] = useState<string | null>("dashboard");
 
   function handleRoleSwitch(role: typeof roles[number]) {
     setCurrentRole(role);
@@ -127,6 +246,8 @@ export function AppSidebar() {
       router.replace("/login");
     }
   }
+  // Choose sidebar sections based on role
+  const sidebarSectionsToUse = currentRole.key === 'contractor' ? contractorSidebarSections : sidebarSections;
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -179,35 +300,47 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
-                    <Link href={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarSeparator />
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Documents</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {documentsItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
-                    <Link href={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+              {sidebarSectionsToUse.map((section) => (
+                <>
+                  <SidebarMenuItem key={section.key}>
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={section.title}
+                      data-active={expandedSection === section.key}
+                      onClick={() =>
+                        setExpandedSection(
+                          expandedSection === section.key ? null : section.key
+                        )
+                      }
+                    >
+                      <button type="button" className="flex items-center w-full">
+                        <section.icon className="h-4 w-4" />
+                        <span className="ml-2 flex-1 text-left">{section.title}</span>
+                        {section.subItems.length > 0 && (
+                          expandedSection === section.key ? (
+                            <ChevronDown className="ml-auto h-4 w-4" />
+                          ) : (
+                            <ChevronRight className="ml-auto h-4 w-4" />
+                          )
+                        )}
+                      </button>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {section.subItems.length > 0 && expandedSection === section.key && (
+                    <div className="ml-8">
+                      {section.subItems.map((sub) => (
+                        <SidebarMenuItem key={sub.title}>
+                          <SidebarMenuButton asChild tooltip={sub.title}>
+                            <Link href={sub.url} className="flex items-center">
+                              {sub.icon && <sub.icon className="h-4 w-4 mr-2" />}
+                              <span>{sub.title}</span>
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </div>
+                  )}
+                </>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -266,7 +399,7 @@ export function AppSidebar() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Settings />
+                  <Settings2 />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuItem>
