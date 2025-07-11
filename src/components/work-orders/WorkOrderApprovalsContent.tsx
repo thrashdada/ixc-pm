@@ -218,7 +218,6 @@ export default function WorkOrderApprovalsContent() {
     <div className="flex-1 flex flex-col p-4 sm:p-8 pt-6 bg-muted/50">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Work Order Approvals</h1>
           <p className="text-muted-foreground">
             Review and approve work orders that require authorization
           </p>

@@ -146,7 +146,7 @@ const sidebarSections: SidebarSection[] = [
     title: "Contractors",
     icon: HardHat,
     subItems: [
-      { title: "My Contractors", url: "/contractors", icon: Users2 },
+      { title: "My Contractors", url: "/dashboard/contractors", icon: Users2 },
       { title: "Invite Contractors", url: "/contractors/invite", icon: UserPlus2 },
       { title: "Ratings & Performance", url: "/contractors/ratings", icon: StarHalf },
     ],
