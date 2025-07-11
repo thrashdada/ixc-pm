@@ -220,7 +220,7 @@ export default function WorkOrderThreadsContent() {
 
   const getMessageTypeIcon = (type: string) => {
     switch (type) {
-      case "photo": return <Image className="h-4 w-4" />;
+      case "photo": return <Image className="h-4 w-4" aria-label="Photo" />;
       case "text": return <MessageCircle className="h-4 w-4" />;
       default: return <MessageCircle className="h-4 w-4" />;
     }
@@ -372,7 +372,7 @@ export default function WorkOrderThreadsContent() {
                 {filteredThreads.map((thread) => (
                   <div key={thread.id} className="flex items-start gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={thread.assignedTo.avatar} />
+                      <AvatarImage src={thread.assignedTo.avatar} alt={`${thread.assignedTo.name} avatar`} />
                       <AvatarFallback>{thread.assignedTo.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     
@@ -440,7 +440,7 @@ export default function WorkOrderThreadsContent() {
                           )}
                           {thread.photos > 0 && (
                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Image className="h-3 w-3" />
+                              <Image className="h-3 w-3" aria-label="Photos" />
                               {thread.photos}
                             </div>
                           )}
@@ -475,7 +475,7 @@ export default function WorkOrderThreadsContent() {
                 {filteredThreads.filter(t => t.unreadCount > 0).map((thread) => (
                   <div key={thread.id} className="flex items-start gap-4 p-4 border rounded-lg bg-orange-50 dark:bg-orange-950/20">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={thread.assignedTo.avatar} />
+                      <AvatarImage src={thread.assignedTo.avatar} alt={`${thread.assignedTo.name} avatar`} />
                       <AvatarFallback>{thread.assignedTo.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     
@@ -508,7 +508,7 @@ export default function WorkOrderThreadsContent() {
                 {filteredThreads.filter(t => t.status === "in_progress").map((thread) => (
                   <div key={thread.id} className="flex items-start gap-4 p-4 border rounded-lg bg-blue-50 dark:bg-blue-950/20">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={thread.assignedTo.avatar} />
+                      <AvatarImage src={thread.assignedTo.avatar} alt={`${thread.assignedTo.name} avatar`} />
                       <AvatarFallback>{thread.assignedTo.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     
@@ -542,7 +542,7 @@ export default function WorkOrderThreadsContent() {
                 {filteredThreads.filter(t => t.status === "completed").map((thread) => (
                   <div key={thread.id} className="flex items-start gap-4 p-4 border rounded-lg bg-green-50 dark:bg-green-950/20">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={thread.assignedTo.avatar} />
+                      <AvatarImage src={thread.assignedTo.avatar} alt={`${thread.assignedTo.name} avatar`} />
                       <AvatarFallback>{thread.assignedTo.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     

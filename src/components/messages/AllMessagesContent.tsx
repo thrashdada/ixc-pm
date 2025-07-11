@@ -407,7 +407,7 @@ export default function AllMessagesContent() {
                     message.status === "unread" ? "bg-blue-50 dark:bg-blue-950/20" : "hover:bg-muted/50"
                   }`}>
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={message.sender.avatar} />
+                      <AvatarImage src={message.sender.avatar} alt={`${message.sender.name} avatar`} />
                       <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     
@@ -475,7 +475,7 @@ export default function AllMessagesContent() {
                           )}
                           {message.photos > 0 && (
                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Image className="h-3 w-3" />
+                              <Image className="h-3 w-3" aria-label="Photos" />
                               {message.photos}
                             </div>
                           )}
@@ -506,7 +506,7 @@ export default function AllMessagesContent() {
                 {filteredMessages.filter(m => m.status === "unread").map((message) => (
                   <div key={message.id} className="flex items-start gap-4 p-4 border rounded-lg bg-blue-50 dark:bg-blue-950/20">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={message.sender.avatar} />
+                      <AvatarImage src={message.sender.avatar} alt={`${message.sender.name} avatar`} />
                       <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     
@@ -538,7 +538,7 @@ export default function AllMessagesContent() {
                 {filteredMessages.filter(m => m.priority === "urgent").map((message) => (
                   <div key={message.id} className="flex items-start gap-4 p-4 border rounded-lg bg-red-50 dark:bg-red-950/20">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={message.sender.avatar} />
+                      <AvatarImage src={message.sender.avatar} alt={`${message.sender.name} avatar`} />
                       <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     
@@ -570,7 +570,7 @@ export default function AllMessagesContent() {
                 {filteredMessages.filter(m => m.type === "work_order").map((message) => (
                   <div key={message.id} className="flex items-start gap-4 p-4 border rounded-lg bg-green-50 dark:bg-green-950/20">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={message.sender.avatar} />
+                      <AvatarImage src={message.sender.avatar} alt={`${message.sender.name} avatar`} />
                       <AvatarFallback>{message.sender.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     
