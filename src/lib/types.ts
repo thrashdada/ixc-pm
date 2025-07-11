@@ -67,6 +67,26 @@ export interface WorkOrder {
   notes?: string[];
 }
 
+export interface WorkOrderTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: 'plumbing' | 'electrical' | 'hvac' | 'carpentry' | 'cleaning' | 'other';
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  estimatedDuration: number; // in hours
+  estimatedCost: number;
+  instructions: string;
+  checklist: string[];
+  requiredMaterials: string[];
+  assignedTo?: string;
+  isActive: boolean;
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+  usageCount: number;
+  lastUsedAt?: Date;
+}
+
 // Contractor Types
 export interface Contractor {
   id: string;

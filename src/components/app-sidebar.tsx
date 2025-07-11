@@ -135,10 +135,10 @@ const sidebarSections: SidebarSection[] = [
     title: "Work Orders",
     icon: ClipboardList,
     subItems: [
-      { title: "All Work Orders", url: "/work-orders", icon: ListChecks },
-      { title: "Create Work Order", url: "/work-orders/create", icon: PlusCircle },
-      { title: "Templates", url: "/work-orders/templates", icon: FileStack },
-      { title: "Approvals Needed", url: "/work-orders/approvals", icon: CheckCircle2 },
+      { title: "All Work Orders", url: "/dashboard/work-orders", icon: ListChecks },
+      { title: "Create Work Order", url: "/dashboard/work-orders/create", icon: PlusCircle },
+      { title: "Templates", url: "/dashboard/work-orders/templates", icon: FileStack },
+      { title: "Approvals Needed", url: "/dashboard/work-orders/approvals", icon: CheckCircle2 },
     ],
   },
   {

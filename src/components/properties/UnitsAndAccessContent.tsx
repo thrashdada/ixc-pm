@@ -53,6 +53,7 @@ import {
   Key,
   Shield,
   UserCheck,
+  Search,
 } from "lucide-react";
 
 // Types for units and access info
@@ -321,38 +322,47 @@ export default function UnitsAndAccessContent() {
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="flex flex-wrap items-center gap-4 mb-6">
-        <Input
-          placeholder="Search units, tenants..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-64"
-        />
-        <div className="flex items-center gap-2">
-          <Label htmlFor="property-filter">Property:</Label>
-          <Select value={selectedProperty} onValueChange={setSelectedProperty}>
-            <SelectTrigger className="w-48">
-              <SelectValue placeholder="Select property" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Properties</SelectItem>
-              {properties.map(property => (
-                <SelectItem key={property.id} value={property.id.toString()}>
-                  {property.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setShowAccessCodes(!showAccessCodes)}
-        >
-          {showAccessCodes ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
-          {showAccessCodes ? "Hide" : "Show"} Access Codes
-        </Button>
-      </div>
+      <Card className="mb-6">
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search units, tenants..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Select value={selectedProperty} onValueChange={setSelectedProperty}>
+              <SelectTrigger>
+                <SelectValue placeholder="Filter by property" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Properties</SelectItem>
+                {properties.map(property => (
+                  <SelectItem key={property.id} value={property.id.toString()}>
+                    {property.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button
+              variant="outline"
+              onClick={() => setShowAccessCodes(!showAccessCodes)}
+            >
+              {showAccessCodes ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
+              {showAccessCodes ? "Hide" : "Show"} Access Codes
+            </Button>
+            <Button variant="outline" onClick={() => {
+              setSearchTerm("");
+              setSelectedProperty("all");
+            }}>
+              Clear Filters
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Units Table */}
       <Card>
