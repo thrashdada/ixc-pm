@@ -536,28 +536,37 @@ export function AppSidebar() {
               {sidebarSectionsToUse.map((section) => (
                 <React.Fragment key={section.key}>
                   <SidebarMenuItem>
-                    <SidebarMenuButton
-                      asChild
-                      tooltip={section.title}
-                      data-active={expandedSection === section.key}
-                      onClick={() =>
-                        setExpandedSection(
-                          expandedSection === section.key ? null : section.key
-                        )
-                      }
-                    >
-                      <button type="button" className="flex items-center w-full">
-                        <section.icon className="h-4 w-4" />
-                        <span className="ml-2 flex-1 text-left">{section.title}</span>
-                        {section.subItems.length > 0 && (
-                          expandedSection === section.key ? (
-                            <ChevronDown className="ml-auto h-4 w-4" />
-                          ) : (
-                            <ChevronRight className="ml-auto h-4 w-4" />
+                    {section.url && section.subItems.length === 0 ? (
+                      <SidebarMenuButton asChild tooltip={section.title} data-active={expandedSection === section.key}>
+                        <Link href={section.url} className="flex items-center w-full">
+                          <section.icon className="h-4 w-4" />
+                          <span className="ml-2 flex-1 text-left">{section.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    ) : (
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={section.title}
+                        data-active={expandedSection === section.key}
+                        onClick={() =>
+                          setExpandedSection(
+                            expandedSection === section.key ? null : section.key
                           )
-                        )}
-                      </button>
-                    </SidebarMenuButton>
+                        }
+                      >
+                        <button type="button" className="flex items-center w-full">
+                          <section.icon className="h-4 w-4" />
+                          <span className="ml-2 flex-1 text-left">{section.title}</span>
+                          {section.subItems.length > 0 && (
+                            expandedSection === section.key ? (
+                              <ChevronDown className="ml-auto h-4 w-4" />
+                            ) : (
+                              <ChevronRight className="ml-auto h-4 w-4" />
+                            )
+                          )}
+                        </button>
+                      </SidebarMenuButton>
+                    )}
                   </SidebarMenuItem>
                   {section.subItems.length > 0 && expandedSection === section.key && (
                     <div

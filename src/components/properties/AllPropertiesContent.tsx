@@ -19,8 +19,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { 
   PlusCircle,
-  Search,
-  Filter,
   MoreHorizontal,
   Building2,
   MapPin,
@@ -31,6 +29,14 @@ import {
   Users,
   DollarSign,
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Mock data for properties
 const properties = [
@@ -117,6 +123,25 @@ const properties = [
 ];
 
 export default function AllPropertiesContent() {
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [typeFilter, setTypeFilter] = React.useState("all");
+  const [statusFilter, setStatusFilter] = React.useState("all");
+
+  const propertyTypes = Array.from(new Set(properties.map(p => p.type)));
+  const propertyStatuses = Array.from(new Set(properties.map(p => p.status)));
+
+  const filteredProperties = properties.filter((property) => {
+    const matchesSearch =
+      property.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.contact.phone.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = typeFilter === "all" || property.type === typeFilter;
+    const matchesStatus = statusFilter === "all" || property.status === statusFilter;
+    return matchesSearch && matchesType && matchesStatus;
+  });
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
@@ -131,30 +156,20 @@ export default function AllPropertiesContent() {
   };
 
   return (
-    <div className="p-6">
+    <div className="flex-1 space-y-4 p-8 pt-6 bg-muted/50">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold mb-2">All Properties</h1>
           <p className="text-muted-foreground">
             Manage and view all your properties. Track maintenance, costs, and performance.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
-          <Button variant="outline" size="sm">
-            <Filter className="h-4 w-4 mr-2" />
-            Filter
-          </Button>
-          <Button>
+          <Button size="sm">
             <PlusCircle className="h-4 w-4 mr-2" />
             Add Property
           </Button>
         </div>
       </div>
-
       {/* Summary Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         <Card>
@@ -204,7 +219,43 @@ export default function AllPropertiesContent() {
           </CardContent>
         </Card>
       </div>
-
+      {/* Search and Filter Bar */}
+      <div className="flex flex-wrap items-center gap-4 mb-6">
+        <Input
+          placeholder="Search properties, address, contact..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-64"
+        />
+        <div className="flex items-center gap-2">
+          <span className="text-sm">Type:</span>
+          <Select value={typeFilter} onValueChange={setTypeFilter}>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="All Types" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Types</SelectItem>
+              {propertyTypes.map((type) => (
+                <SelectItem key={type} value={type}>{type}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm">Status:</span>
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="All Statuses" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Statuses</SelectItem>
+              {propertyStatuses.map((status) => (
+                <SelectItem key={status} value={status}>{status.charAt(0).toUpperCase() + status.slice(1)}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
       {/* Properties Table */}
       <Card>
         <CardHeader>
@@ -226,7 +277,7 @@ export default function AllPropertiesContent() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {properties.map((property) => (
+              {filteredProperties.map((property) => (
                 <TableRow key={property.id}>
                   <TableCell>
                     <div>
