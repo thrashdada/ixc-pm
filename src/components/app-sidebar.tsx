@@ -4,7 +4,7 @@ import React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import {
   Sidebar,
   SidebarContent,
@@ -460,6 +460,7 @@ const roles = [
 export function AppSidebar() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const urlRole = searchParams.get("role");
   const initialRole = roles.find(r => r.key === urlRole) || roles[0];
   const [currentRole, setCurrentRole] = useState(initialRole);
@@ -481,6 +482,23 @@ export function AppSidebar() {
   }
   // Choose sidebar sections based on role
   const sidebarSectionsToUse = currentRole.key === 'contractor' ? contractorSidebarSections : currentRole.key === 'admin' ? adminSidebarSections : currentRole.key === 'accountant' ? accountantSidebarSections : sidebarSections;
+
+  // Sync expandedSection with current route
+  React.useEffect(() => {
+    // Find the section whose url or subItem url matches the current pathname
+    let foundSection: string | null = null;
+    for (const section of sidebarSectionsToUse) {
+      if (section.url && pathname === section.url) {
+        foundSection = section.key;
+        break;
+      }
+      if (section.subItems.some(sub => pathname === sub.url)) {
+        foundSection = section.key;
+        break;
+      }
+    }
+    setExpandedSection(foundSection || "dashboard");
+  }, [pathname, currentRole]);
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
