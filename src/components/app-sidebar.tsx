@@ -167,7 +167,7 @@ const sidebarSections: SidebarSection[] = [
     icon: BarChart2,
     subItems: [
       { title: "Job Reports", url: "/reports/jobs", icon: FileBarChart2 },
-      { title: "Contractor Analytics", url: "/reports/contractors", icon: PieChart },
+      { title: "Contractor Analytics", url: "/reports/contractor-analytics", icon: PieChart },
       { title: "Maintenance Trends", url: "/reports/maintenance", icon: TrendingUp },
       { title: "Export Data", url: "/reports/export", icon: Download },
     ],
