@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebarWrapper } from "@/components/app-sidebar-wrapper";
 
-export default function DashboardLayout({
+export default function PropertiesLayout({
   children,
 }: {
   children: React.ReactNode;

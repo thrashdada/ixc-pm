@@ -92,6 +92,7 @@ import {
   Check,
   LogOut,
   LucideIcon,
+  TrendingDown,
 } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
@@ -373,6 +374,82 @@ const contractorSidebarSections: SidebarSection[] = [
   },
 ];
 
+const accountantSidebarSections: SidebarSection[] = [
+  {
+    key: "dashboard",
+    title: "Dashboard",
+    icon: LayoutDashboard,
+    url: "/dashboard",
+    subItems: [],
+  },
+  {
+    key: "billing",
+    title: "Billing & Invoicing",
+    icon: CreditCard,
+    subItems: [
+      { title: "Invoice Management", url: "/accountant/invoices", icon: FileText },
+      { title: "Payment Processing", url: "/accountant/payments", icon: CreditCard },
+      { title: "Payment History", url: "/accountant/payments/history", icon: FileBarChart2 },
+      { title: "Failed Payments", url: "/accountant/payments/failed", icon: XCircle },
+    ],
+  },
+  {
+    key: "financial",
+    title: "Financial Reports",
+    icon: BarChart2,
+    subItems: [
+      { title: "Revenue Reports", url: "/accountant/reports/revenue", icon: TrendingUp },
+      { title: "Expense Reports", url: "/accountant/reports/expenses", icon: TrendingDown },
+      { title: "Profit & Loss", url: "/accountant/reports/pnl", icon: PieChart },
+      { title: "Cash Flow", url: "/accountant/reports/cashflow", icon: BarChart2 },
+    ],
+  },
+  {
+    key: "tax",
+    title: "Tax & Compliance",
+    icon: FileText,
+    subItems: [
+      { title: "Tax Reports", url: "/accountant/tax/reports", icon: FileText },
+      { title: "1099 Management", url: "/accountant/tax/1099", icon: FileInput },
+      { title: "Tax Liability", url: "/accountant/tax/liability", icon: AlertTriangle },
+      { title: "Compliance Status", url: "/accountant/tax/compliance", icon: CheckCircle2 },
+    ],
+  },
+  {
+    key: "contractors",
+    title: "Contractor Payments",
+    icon: Users2,
+    subItems: [
+      { title: "Payment Approvals", url: "/accountant/contractors/approvals", icon: CheckCircle2 },
+      { title: "Payment History", url: "/accountant/contractors/history", icon: FileBarChart2 },
+      { title: "Payment Methods", url: "/accountant/contractors/methods", icon: CreditCard },
+      { title: "Tax Documents", url: "/accountant/contractors/tax", icon: FileText },
+    ],
+  },
+  {
+    key: "analytics",
+    title: "Analytics",
+    icon: BarChart2,
+    subItems: [
+      { title: "Financial Metrics", url: "/accountant/analytics/metrics", icon: PieChart },
+      { title: "Trend Analysis", url: "/accountant/analytics/trends", icon: TrendingUp },
+      { title: "KPI Dashboard", url: "/accountant/analytics/kpi", icon: BarChart2 },
+      { title: "Export Data", url: "/accountant/analytics/export", icon: Download },
+    ],
+  },
+  {
+    key: "settings",
+    title: "Financial Settings",
+    icon: Settings2,
+    subItems: [
+      { title: "Payment Methods", url: "/accountant/settings/payments", icon: CreditCard },
+      { title: "Tax Settings", url: "/accountant/settings/tax", icon: FileText },
+      { title: "Invoice Templates", url: "/accountant/settings/templates", icon: FileStack },
+      { title: "Billing Preferences", url: "/accountant/settings/billing", icon: Settings2 },
+    ],
+  },
+];
+
 const roles = [
   { key: "pm", name: "Property Manager", sub: "Manage properties", shortcut: "⌘1" },
   { key: "contractor", name: "Contractor", sub: "Receive jobs", shortcut: "⌘2" },
@@ -403,7 +480,7 @@ export function AppSidebar() {
     }
   }
   // Choose sidebar sections based on role
-  const sidebarSectionsToUse = currentRole.key === 'contractor' ? contractorSidebarSections : currentRole.key === 'admin' ? adminSidebarSections : sidebarSections;
+  const sidebarSectionsToUse = currentRole.key === 'contractor' ? contractorSidebarSections : currentRole.key === 'admin' ? adminSidebarSections : currentRole.key === 'accountant' ? accountantSidebarSections : sidebarSections;
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>

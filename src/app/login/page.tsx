@@ -26,12 +26,26 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
+    
+    // Simulate API call
     setTimeout(() => {
-      if (email === "demo@incoxchange.com" && password === "incoxchange") {
-        localStorage.setItem("demo-auth", "1");
-        router.replace("/dashboard?role=pm");
-      } else {
-        setError("Invalid email or password. Try demo@incoxchange.com / incoxchange");
+      try {
+        if (email === "demo@incoxchange.com" && password === "incoxchange") {
+          localStorage.setItem("demo-auth", "1");
+          localStorage.setItem("demo-user", JSON.stringify({
+            id: "1",
+            email: "demo@incoxchange.com",
+            name: "Demo User",
+            role: "pm"
+          }));
+          router.replace("/dashboard?role=pm");
+        } else {
+          setError("Invalid email or password. Try demo@incoxchange.com / incoxchange");
+        }
+      } catch (error) {
+        setError("An unexpected error occurred. Please try again.");
+        console.error("Login error:", error);
+      } finally {
         setLoading(false);
       }
     }, 600);
@@ -59,9 +73,9 @@ export default function LoginPage() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              &ldquo;This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.&rdquo;
+              &ldquo;I can finally prove to tenants that repairs are being handled properly. The photo timeline is worth its weight in gold.&rdquo;
             </p>
-            <footer className="text-sm">Sofia Davis</footer>
+            <footer className="text-sm">Rober Kim - Urban Living Managemen</footer>
           </blockquote>
         </div>
       </div>
